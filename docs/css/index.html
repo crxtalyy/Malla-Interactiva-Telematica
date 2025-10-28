@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Malla Interactiva - Horizontal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Malla Interactiva - Ing Civil Telemática</h1>
+
+  <div style="text-align:center; margin-bottom: 12px;">
+    <button onclick="simularReprobacion()" style="padding:8px 14px; border-radius:8px; border:none; background:#c362d2; color:white; cursor:pointer; font-weight:600;">
+      Simular Reprobación
+    </button>
+  </div>
+
+  <div class="malla" id="malla">
+    <!-- Primer semestre -->
+    <div class="columna">
+      <div class="titulo">I Semestre</div>
+      <div class="ramo" id="MAT070" onclick="toggleRamo('MAT070')">Introducción al Cálculo</div>
+      <div class="ramo" id="MAT060" onclick="toggleRamo('MAT060')">Álgebra y Geometría</div>
+      <div class="ramo" id="FIS100" onclick="toggleRamo('FIS100')">Introducción a la Física</div>
+      <div class="ramo" id="IWG400" onclick="toggleRamo('IWG400')">Proyecto Inicial</div>
+      <div class="ramo" id="EFI200" onclick="toggleRamo('EFI200')">Educación Física</div>
+      <div class="ramo" id="HXW006" onclick="toggleRamo('HXW006')">Comunicación efectiva I</div>
+    </div>
+
+    <!-- Segundo semestre -->
+    <div class="columna">
+      <div class="titulo">II Semestre</div>
+      <div class="ramo bloqueado" id="MAT071" data-requisitos="MAT070" onclick="toggleRamo('MAT071')">Cálculo en una Variable</div>
+      <div class="ramo bloqueado" id="MAT061" data-requisitos="MAT060" onclick="toggleRamo('MAT061')">Álgebra Lineal</div>
+      <div class="ramo bloqueado" id="FIS111" data-requisitos="FIS100" onclick="toggleRamo('FIS111')">Física General Mecánica</div>
+      <div class="ramo bloqueado" id="INF129" data-requisitos="IWG400" onclick="toggleRamo('INF129')">Introducción a la Programación</div>
+      <div class="ramo bloqueado" id="EFI201" data-requisitos="EFI200" onclick="toggleRamo('EFI201')">Educación Física II</div>
+      <div class="ramo bloqueado" id="HXW007" data-requisitos="HXW006" onclick="toggleRamo('HXW007')">Comunicación efectiva II</div>
+    </div>
+
+    <!-- Tercer semestre -->
+    <div class="columna">
+      <div class="titulo">III Semestre</div>
+      <div class="ramo bloqueado" id="MAT002" data-requisitos="MAT071" onclick="toggleRamo('MAT002')">Cálculo en Varias Variables</div>
+      <div class="ramo bloqueado" id="MAT003" data-requisitos="MAT061" onclick="toggleRamo('MAT003')">Ecuaciones Diferenciales Elementales</div>
+      <div class="ramo bloqueado" id="FIS121" data-requisitos="FIS111,MAT061,MAT071" onclick="toggleRamo('FIS121')">Electricidad y Magnetismo</div>
+      <div class="ramo bloqueado" id="ELO234" data-requisitos="INF129" onclick="toggleRamo('ELO234')">Redes de Computadores</div>
+      <div class="ramo bloqueado" id="TEL201" data-requisitos="INF129" onclick="toggleRamo('TEL201')">Seminario de Programación</div>
+      <div class="ramo bloqueado" id="HMN706" data-requisitos="HXW007" onclick="toggleRamo('HMN706')">Análisis Crítico de Texto</div>
+    </div>
+
+    <!-- Cuarto semestre -->
+    <div class="columna">
+      <div class="titulo">IV Semestre</div>
+      <div class="ramo bloqueado" id="TEL202" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL202')">Electrónica Digital</div>
+      <div class="ramo bloqueado" id="TEL203" data-requisitos="TEL201" onclick="toggleRamo('TEL203')">Algorítmica y Complejidad</div>
+      <div class="ramo bloqueado" id="TEL204" data-requisitos="ELO234" onclick="toggleRamo('TEL204')">Laboratorio de Redes de Computadores</div>
+      <div class="ramo bloqueado" id="TEL205" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL205')">Laboratorio de Electrónica Digital</div>
+      <div class="ramo bloqueado" id="FIS131" data-requisitos="FIS111" onclick="toggleRamo('FIS131')">Calor y Ondas</div>
+      <div class="ramo bloqueado" id="HMN707" data-requisitos="HXW007" onclick="toggleRamo('HMN707')">Comunicación efectiva III</div>
+    </div>
+
+    <!-- Quinto semestre -->
+    <div class="columna">
+      <div class="titulo">V Semestre</div>
+      <div class="ramo bloqueado" id="HMN708" data-requisitos="IWG400" onclick="toggleRamo('HMN708')">Práctica en Acción Comunitaria</div>
+      <div class="ramo bloqueado" id="ICS703" onclick="toggleRamo('ICS703')">Administración y Sostenibilidad Organizacional</div>
+      <div class="ramo bloqueado" id="TEL306" data-requisitos="TEL204" onclick="toggleRamo('TEL306')">Administración de Redes</div>
+      <div class="ramo bloqueado" id="TEL307" data-requisitos="TEL202,TEL205" onclick="toggleRamo('TEL307')">Sistemas Digitales y Estructura Computadores</div>
+      <div class="ramo bloqueado" id="INF305" data-requisitos="INF129" onclick="toggleRamo('INF305')">Bases de Datos</div>
+      <div class="ramo bloqueado" id="TEL308" data-requisitos="MAT002,FIS121" onclick="toggleRamo('TEL308')">Fundamentos de Transmisión Señales</div>
+    </div>
+
+    <!-- Sexto semestre -->
+    <div class="columna">
+      <div class="titulo">VI Semestre</div>
+      <div class="ramo bloqueado" id="HMN709" data-requisitos="HMN707" onclick="toggleRamo('HMN709')">Comunicación efectiva en español/inglés IV</div>
+      <div class="ramo bloqueado" id="IND732" data-requisitos="ICS703" onclick="toggleRamo('IND732')">Ingeniería Económica</div>
+      <div class="ramo bloqueado" id="INF236" data-requisitos="INF305" onclick="toggleRamo('INF236')">Análisis y Diseño de Software</div>
+      <div class="ramo bloqueado" id="ELO335" data-requisitos="TEL201" onclick="toggleRamo('ELO335')">Sistemas Operativos</div>
+      <div class="ramo bloqueado" id="INF280" data-requisitos="MAT002,INF129" onclick="toggleRamo('INF280')">Estadística Computacional</div>
+      <div class="ramo bloqueado" id="ELO715" data-requisitos="TEL308" onclick="toggleRamo('ELO715')">Principios de Comunicaciones</div>
+    </div>
+
+    <!-- Séptimo semestre (vacío) -->
+    <div class="columna">
+      <div class="titulo">VII Semestre</div>
+    </div>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
