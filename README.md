@@ -13,14 +13,12 @@ docs/
 
 ├── css/
 
-│ └── style.css # Archivo que define el diseño de la página
+│ └── style.css
 
 └── js/
 
-└── script.js # Archivo con la lógica y funcionalidades de la malla
+└── script.js
 
-yaml
-Copiar código
 
 ---
 
@@ -30,12 +28,12 @@ Copiar código
    ```bash
    git clone https://github.com/tu-usuario/Malla-Interactiva-Telematica.git
 
-Abrir el archivo docs/index.html en un navegador web. Al hacer click en el archivo index debería abrirse automaticamente en el buscador.
+Abrir el archivo index.html en un navegador web. Al hacer click en el archivo index debería abrirse automaticamente en el buscador.
 
 ¡Listo! La malla interactiva debería funcionar localmente.
 
 
-
+---
 
 🛠 Tecnologías usadas
 
