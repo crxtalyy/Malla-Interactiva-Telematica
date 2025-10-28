@@ -9,10 +9,14 @@ Nueva malla interactiva local para la carrera Ingeniería Civil Telemática de l
 El repositorio contiene una carpeta principal llamada `docs`, que incluye todos los archivos necesarios para que la malla interactiva funcione:
 
 docs/
-├── index.html # Archivo principal que abre la página en el navegador
+├── index.html 
+
 ├── css/
+
 │ └── style.css # Archivo que define el diseño de la página
+
 └── js/
+
 └── script.js # Archivo con la lógica y funcionalidades de la malla
 
 yaml
