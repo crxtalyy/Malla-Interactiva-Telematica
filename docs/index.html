@@ -10,13 +10,15 @@
   <h1>Malla Interactiva - Ing Civil Telemática</h1>
 
   <div style="text-align:center; margin-bottom: 12px;">
-    <button onclick="simularReprobacion()" style="padding:8px 14px; border-radius:8px; border:none; background:#c362d2; color:white; cursor:pointer; font-weight:600;">
+    <button onclick="simularReprobacion()"
+      style="padding:8px 14px; border-radius:8px; border:none; background:#c362d2; color:white; cursor:pointer; font-weight:600;">
       Simular Reprobación
     </button>
   </div>
 
   <div class="malla" id="malla">
-    <!-- Primer semestre -->
+
+    <!-- I Semestre -->
     <div class="columna">
       <div class="titulo">I Semestre</div>
       <div class="ramo" id="MAT070" onclick="toggleRamo('MAT070')">Introducción al Cálculo</div>
@@ -27,7 +29,7 @@
       <div class="ramo" id="HXW006" onclick="toggleRamo('HXW006')">Comunicación efectiva I</div>
     </div>
 
-    <!-- Segundo semestre -->
+    <!-- II Semestre -->
     <div class="columna">
       <div class="titulo">II Semestre</div>
       <div class="ramo bloqueado" id="MAT071" data-requisitos="MAT070" onclick="toggleRamo('MAT071')">Cálculo en una Variable</div>
@@ -38,53 +40,90 @@
       <div class="ramo bloqueado" id="HXW007" data-requisitos="HXW006" onclick="toggleRamo('HXW007')">Comunicación efectiva II</div>
     </div>
 
-    <!-- Tercer semestre -->
+    <!-- III Semestre -->
     <div class="columna">
       <div class="titulo">III Semestre</div>
-      <div class="ramo bloqueado" id="MAT002" data-requisitos="MAT071" onclick="toggleRamo('MAT002')">Cálculo en Varias Variables</div>
-      <div class="ramo bloqueado" id="MAT003" data-requisitos="MAT061" onclick="toggleRamo('MAT003')">Ecuaciones Diferenciales Elementales</div>
-      <div class="ramo bloqueado" id="FIS121" data-requisitos="FIS111,MAT061,MAT071" onclick="toggleRamo('FIS121')">Electricidad y Magnetismo</div>
+      <div class="ramo bloqueado" id="MAT002" data-requisitos="MAT071,MAT061" onclick="toggleRamo('MAT002')">Cálculo en Varias Variables</div>
+      <div class="ramo bloqueado" id="MAT003" data-requisitos="MAT071,MAT061" onclick="toggleRamo('MAT003')">Ecuaciones Diferenciales</div>
+      <div class="ramo bloqueado" id="FIS121" data-requisitos="FIS111,MAT071,MAT061" onclick="toggleRamo('FIS121')">Electricidad y Magnetismo</div>
       <div class="ramo bloqueado" id="ELO234" data-requisitos="INF129" onclick="toggleRamo('ELO234')">Redes de Computadores</div>
       <div class="ramo bloqueado" id="TEL201" data-requisitos="INF129" onclick="toggleRamo('TEL201')">Seminario de Programación</div>
       <div class="ramo bloqueado" id="HMN706" data-requisitos="HXW007" onclick="toggleRamo('HMN706')">Análisis Crítico de Texto</div>
     </div>
 
-    <!-- Cuarto semestre -->
+    <!-- IV Semestre -->
     <div class="columna">
       <div class="titulo">IV Semestre</div>
       <div class="ramo bloqueado" id="TEL202" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL202')">Electrónica Digital</div>
       <div class="ramo bloqueado" id="TEL203" data-requisitos="TEL201" onclick="toggleRamo('TEL203')">Algorítmica y Complejidad</div>
-      <div class="ramo bloqueado" id="TEL204" data-requisitos="ELO234" onclick="toggleRamo('TEL204')">Laboratorio de Redes de Computadores</div>
-      <div class="ramo bloqueado" id="TEL205" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL205')">Laboratorio de Electrónica Digital</div>
+      <div class="ramo bloqueado" id="TEL204" data-requisitos="ELO234" onclick="toggleRamo('TEL204')">Lab. Redes de Computadores</div>
+      <div class="ramo bloqueado" id="TEL205" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL205')">Lab. Electrónica Digital</div>
       <div class="ramo bloqueado" id="FIS131" data-requisitos="FIS111" onclick="toggleRamo('FIS131')">Calor y Ondas</div>
-      <div class="ramo bloqueado" id="HMN707" data-requisitos="HXW007" onclick="toggleRamo('HMN707')">Comunicación efectiva III</div>
+      <div class="ramo bloqueado" id="HMN707" data-requisitos="HMN706" onclick="toggleRamo('HMN707')">Comunicación efectiva III</div>
     </div>
 
-    <!-- Quinto semestre -->
+    <!-- V Semestre -->
     <div class="columna">
       <div class="titulo">V Semestre</div>
-      <div class="ramo bloqueado" id="HMN708" data-requisitos="IWG400" onclick="toggleRamo('HMN708')">Práctica en Acción Comunitaria</div>
-      <div class="ramo bloqueado" id="ICS703" onclick="toggleRamo('ICS703')">Administración y Sostenibilidad Organizacional</div>
       <div class="ramo bloqueado" id="TEL306" data-requisitos="TEL204" onclick="toggleRamo('TEL306')">Administración de Redes</div>
-      <div class="ramo bloqueado" id="TEL307" data-requisitos="TEL202,TEL205" onclick="toggleRamo('TEL307')">Sistemas Digitales y Estructura Computadores</div>
-      <div class="ramo bloqueado" id="INF305" data-requisitos="INF129" onclick="toggleRamo('INF305')">Bases de Datos</div>
-      <div class="ramo bloqueado" id="TEL308" data-requisitos="MAT002,FIS121" onclick="toggleRamo('TEL308')">Fundamentos de Transmisión Señales</div>
+      <div class="ramo" id="ICS703" onclick="toggleRamo('ICS703')">Administración y Sostenibilidad Organizacional</div>
+      <div class="ramo bloqueado" id="INF305" data-requisitos="TEL203" onclick="toggleRamo('INF305')">Bases de Datos</div>
+      <div class="ramo bloqueado" id="TEL308" data-requisitos="MAT071,FIS121" onclick="toggleRamo('TEL308')">Fund. Transmisión de Señales</div>
+      <div class="ramo bloqueado" id="HMN708" data-requisitos="HMN707" onclick="toggleRamo('HMN708')">Práctica en Acción Comunitaria</div>
+      <div class="ramo bloqueado" id="TEL307" data-requisitos="TEL202,TEL205" onclick="toggleRamo('TEL307')">Sistemas Digitales y Estructura de Computadores</div>
     </div>
 
-    <!-- Sexto semestre -->
+    <!-- VI Semestre -->
     <div class="columna">
       <div class="titulo">VI Semestre</div>
-      <div class="ramo bloqueado" id="HMN709" data-requisitos="HMN707" onclick="toggleRamo('HMN709')">Comunicación efectiva en español/inglés IV</div>
+      <div class="ramo bloqueado" id="INF313" data-requisitos="INF305" onclick="toggleRamo('INF313')">Análisis y Diseño de Software</div>
+      <div class="ramo bloqueado" id="HMN709" data-requisitos="HMN708" onclick="toggleRamo('HMN709')">Comunicación efectiva IV</div>
+      <div class="ramo bloqueado" id="INF204" data-requisitos="INF129,MAT002" onclick="toggleRamo('INF204')">Estadística Computacional</div>
       <div class="ramo bloqueado" id="IND732" data-requisitos="ICS703" onclick="toggleRamo('IND732')">Ingeniería Económica</div>
-      <div class="ramo bloqueado" id="INF236" data-requisitos="INF305" onclick="toggleRamo('INF236')">Análisis y Diseño de Software</div>
-      <div class="ramo bloqueado" id="ELO335" data-requisitos="TEL201" onclick="toggleRamo('ELO335')">Sistemas Operativos</div>
-      <div class="ramo bloqueado" id="INF280" data-requisitos="MAT002,INF129" onclick="toggleRamo('INF280')">Estadística Computacional</div>
       <div class="ramo bloqueado" id="ELO715" data-requisitos="TEL308" onclick="toggleRamo('ELO715')">Principios de Comunicaciones</div>
+      <div class="ramo bloqueado" id="ELO335" data-requisitos="TEL201" onclick="toggleRamo('ELO335')">Sistemas Operativos</div>
     </div>
 
-    <!-- Séptimo semestre (vacío) -->
+    <!-- VII Semestre -->
     <div class="columna">
       <div class="titulo">VII Semestre</div>
+      <div class="ramo bloqueado" id="TEL410" data-requisitos="INF204,INF129" onclick="toggleRamo('TEL410')">Ciencia de Datos</div>
+      <div class="ramo bloqueado" id="TEL409" data-requisitos="ELO234,INF204" onclick="toggleRamo('TEL409')">Disponibilidad y Rendimiento de Sistemas TIC</div>
+      <div class="ramo bloqueado" id="INF418" data-requisitos="INF313" onclick="toggleRamo('INF418')">Ingeniería de Software</div>
+      <div class="ramo bloqueado" id="HMN710" data-requisitos="HMN709" onclick="toggleRamo('HMN710')">Inglés Disciplinar</div>
+      <div class="ramo bloqueado" id="ELO419" data-requisitos="ELO715" onclick="toggleRamo('ELO419')">Laboratorio de Comunicaciones</div>
+      <div class="ramo bloqueado" id="INF306" data-requisitos="INF129,MAT061" onclick="toggleRamo('INF306')">Optimización</div>
+    </div>
+
+    <!-- VIII Semestre -->
+    <div class="columna">
+      <div class="titulo">VIII Semestre</div>
+      <div class="ramo bloqueado" id="TEL415" data-requisitos="INF305,INF418" onclick="toggleRamo('TEL415')">Aplicaciones Web y Móviles</div>
+      <div class="ramo bloqueado" id="TEL413" data-requisitos="MAT002,ELO335,INF418" onclick="toggleRamo('TEL413')">Ingeniería en Ciberseguridad</div>
+      <div class="ramo bloqueado" id="TEL412" data-requisitos="INF313" onclick="toggleRamo('TEL412')">Pensamiento de Diseño de Ingeniería</div>
+      <div class="ramo bloqueado" id="TEL414" data-requisitos="INF204,ELO234" onclick="toggleRamo('TEL414')">Planificación Infraestructura Telemática</div>
+      <div class="ramo bloqueado" id="TEL416" data-requisitos="INF204,TEL203" onclick="toggleRamo('TEL416')">Procesamiento Digital de Imágenes</div>
+    </div>
+
+    <!-- IX Semestre -->
+    <div class="columna">
+      <div class="titulo">IX Semestre</div>
+      <div class="ramo" id="ISC707" onclick="toggleRamo('ISC707')">Gestión de la Innovación</div>
+      <div class="ramo" id="DGD728" onclick="toggleRamo('DGD728')">Taller Memoria Multidisciplinaria I</div>
+      <div class="ramo" id="TEL617" onclick="toggleRamo('TEL617')">Electivo</div>
+      <div class="ramo" id="TEL618" onclick="toggleRamo('TEL618')">Electivo Disciplinar I</div>
+      <div class="ramo" id="TEL619" onclick="toggleRamo('TEL619')">Electivo Disciplinar II</div>
+      <div class="ramo" id="TEL620" onclick="toggleRamo('TEL620')">Electivo Disciplinar III</div>
+    </div>
+
+    <!-- X Semestre -->
+    <div class="columna">
+      <div class="titulo">X Semestre</div>
+      <div class="ramo" id="ICS_EMPRE" onclick="toggleRamo('ICS_EMPRE')">Gestión del Emprendimiento</div>
+      <div class="ramo" id="DGD729" onclick="toggleRamo('DGD729')">Taller Memoria Multidisciplinaria II</div>
+      <div class="ramo" id="TEL621" onclick="toggleRamo('TEL621')">Electivo Disciplinar IV</div>
+      <div class="ramo" id="TEL622" onclick="toggleRamo('TEL622')">Electivo Disciplinar V</div>
+      <div class="ramo" id="TEL623" onclick="toggleRamo('TEL623')">Electivo Disciplinar VI</div>
     </div>
 
   </div>

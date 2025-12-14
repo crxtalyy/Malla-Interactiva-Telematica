@@ -15,6 +15,7 @@ function construirGrafoDependencias() {
   document.querySelectorAll("[data-requisitos]").forEach(el => {
     const lista = el.getAttribute("data-requisitos");
     if (!lista) return;
+
     const reqs = lista.split(",").map(s => s.trim()).filter(Boolean);
     reqs.forEach(rid => {
       if (!dependientes[rid]) dependientes[rid] = new Set();
@@ -23,13 +24,20 @@ function construirGrafoDependencias() {
   });
 }
 
+// ✅ CAMBIO CLAVE: IGNORAR REQUISITOS QUE NO EXISTEN
 function cumpleRequisitos(el) {
   const lista = el.getAttribute("data-requisitos");
   if (!lista) return true;
+
   const reqs = lista.split(",").map(s => s.trim()).filter(Boolean);
+
   return reqs.every(rid => {
     const r = document.getElementById(rid);
-    return r && r.classList.contains("activo");
+
+    // si el requisito no existe en la malla → se ignora
+    if (!r) return true;
+
+    return r.classList.contains("activo");
   });
 }
 
@@ -53,8 +61,7 @@ function inicializarEstado() {
 
 function toggleRamo(id) {
   const el = document.getElementById(id);
-  if (!el) return;
-  if (el.classList.contains("bloqueado")) return;
+  if (!el || el.classList.contains("bloqueado")) return;
 
   const ahoraActivo = el.classList.toggle("activo");
 
@@ -75,9 +82,11 @@ function toggleRamo(id) {
 
 function cerrarDependientesRecursivo(id) {
   if (!dependientes[id]) return;
+
   dependientes[id].forEach(depId => {
     const depEl = document.getElementById(depId);
     if (!depEl) return;
+
     depEl.classList.remove("activo");
     if (!cumpleRequisitos(depEl)) {
       depEl.classList.add("bloqueado");
@@ -91,20 +100,24 @@ function cerrarDependientesRecursivo(id) {
 // SIMULACIÓN DE REPROBACIÓN
 // ----------------------
 function construirMapaRamos() {
+  mapaRamos = {};
   document.querySelectorAll(".columna").forEach((col, index) => {
     const semestre = index + 1;
     col.querySelectorAll(".ramo").forEach(ramo => {
       mapaRamos[ramo.id] = {
         id: ramo.id,
-        semestre: semestre,
-        requisitos: (ramo.dataset.requisitos || "").split(",").filter(Boolean),
+        semestre,
+        requisitos: (ramo.dataset.requisitos || "")
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean),
       };
     });
   });
 }
 
 function simularReprobacion() {
-  const id = prompt("Ingresa el ID del ramo que reprobaste (por ejemplo: MAT060):");
+  const id = prompt("Ingresa el ID del ramo que reprobaste (ej: FIS100):");
   if (!id || !mapaRamos[id]) {
     alert("Ramo no encontrado.");
     return;
@@ -113,78 +126,48 @@ function simularReprobacion() {
   moverRamoUnSemestreAdelante(id);
 
   if (dependientes[id]) {
-    dependientes[id].forEach(depId => {
-      actualizarDependientes(depId);
-    });
+    dependientes[id].forEach(depId => actualizarDependientes(depId));
   }
 
   inicializarEstado();
-  alert(`El ramo ${id} y sus dependientes se han reorganizado según sus prerequisitos.`);
+  alert(`El ramo ${id} y sus dependientes fueron reorganizados.`);
 }
 
 function moverRamoUnSemestreAdelante(id) {
   const ramo = mapaRamos[id];
-  if (!ramo) return;
-
   const el = document.getElementById(id);
-  if (!el) return;
+  if (!ramo || !el) return;
 
   const columnas = document.querySelectorAll(".columna");
-  let nuevaSemestreIndex = ramo.semestre;
+  const nuevaColumna = columnas[ramo.semestre];
 
-  while (columnas.length <= nuevaSemestreIndex) {
-    const colNueva = document.createElement("div");
-    colNueva.classList.add("columna");
-    const titulo = document.createElement("div");
-    titulo.classList.add("titulo");
-    titulo.innerText = `Semestre ${columnas.length + 1}`;
-    colNueva.appendChild(titulo);
-    document.getElementById("malla").appendChild(colNueva);
-  }
+  if (!nuevaColumna) return;
 
-  const nuevaColumna = document.querySelectorAll(".columna")[nuevaSemestreIndex];
-  el.style.transition = "all 0.5s ease";
-  el.style.backgroundColor = "#e2b6f0";
   nuevaColumna.appendChild(el);
   ramo.semestre++;
-
-  setTimeout(() => el.style.backgroundColor = "", 600);
 }
 
 function actualizarDependientes(id) {
   const ramo = mapaRamos[id];
-  if (!ramo) return;
-
   const el = document.getElementById(id);
-  if (!el) return;
+  if (!ramo || !el) return;
 
-  let maxSemestreReq = 0;
+  let maxSemReq = 0;
+
   ramo.requisitos.forEach(reqId => {
-    const reqRamo = mapaRamos[reqId];
-    if (!reqRamo) return;
-    if (reqRamo.semestre > maxSemestreReq) maxSemestreReq = reqRamo.semestre;
+    const req = mapaRamos[reqId];
+    if (req && req.semestre > maxSemReq) {
+      maxSemReq = req.semestre;
+    }
   });
 
-  if (ramo.semestre <= maxSemestreReq) {
+  if (ramo.semestre <= maxSemReq) {
     const columnas = document.querySelectorAll(".columna");
+    const nuevaCol = columnas[maxSemReq];
+    if (!nuevaCol) return;
 
-    while (columnas.length <= maxSemestreReq) {
-      const colNueva = document.createElement("div");
-      colNueva.classList.add("columna");
-      const titulo = document.createElement("div");
-      titulo.classList.add("titulo");
-      titulo.innerText = `Semestre ${columnas.length + 1}`;
-      colNueva.appendChild(titulo);
-      document.getElementById("malla").appendChild(colNueva);
-    }
-
-    const nuevaColumna = document.querySelectorAll(".columna")[maxSemestreReq];
-    el.style.transition = "all 0.5s ease";
-    el.style.backgroundColor = "#e2b6f0";
-    nuevaColumna.appendChild(el);
-    ramo.semestre = maxSemestreReq + 1;
-
-    setTimeout(() => el.style.backgroundColor = "", 600);
+    nuevaCol.appendChild(el);
+    ramo.semestre = maxSemReq + 1;
   }
 
   if (dependientes[id]) {
